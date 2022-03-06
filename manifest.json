@@ -1,10 +1,11 @@
 ﻿{
-	"name": "MyFirstMod",
+	"name": "ConfigEgocentrism",
 	"version_number": "1.0.0",
-	"website_url": "",
-	"description": "My first Mod",
+	"website_url": "https://github.com/Judgy53/ConfigEgocentrism",
+	"description": "Change how Egocentrism works through a config file.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.9",
-		"RiskofThunder-HookGenPatcher-1.2.1"
+		"RiskofThunder-HookGenPatcher-1.2.1",
+		"tristanmcpherson-R2API-4.0.11"
 	]
 }
