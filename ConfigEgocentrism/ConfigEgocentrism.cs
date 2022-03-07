@@ -72,7 +72,7 @@ namespace ConfigEgocentrism
 			{
 				if (string.IsNullOrWhiteSpace(tierStr))
 					continue;
-				if (Enum.TryParse<ItemTierLookup>(tierStr.ToLower(), out ItemTierLookup tier))
+				if (Enum.TryParse<ItemTierLookup>(tierStr.Trim().ToLower(), out ItemTierLookup tier))
 					TransformInvalidItemTiers.Add((ItemTier)tier);
 				else
 					Log.LogError($"TransformItemFilter: Invalid tier input `{tierStr}`");
