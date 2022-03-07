@@ -26,6 +26,8 @@ namespace ConfigEgocentrism
         private static ConfigEntry<float> ConfigProjectilesDamage { get; set; }
         private static ConfigEntry<int> ConfigProjectilesMaxAmountBase { get; set; }
         private static ConfigEntry<int> ConfigProjectilesMaxAmountStack { get; set; }
+        private static ConfigEntry<float> ConfigProjectilesRangeBase { get; set; }
+        private static ConfigEntry<float> ConfigProjectilesRangeStack { get; set; }
 
         private static ConfigEntry<bool> ConfigTransformEnabled { get; set; }
         private static ConfigEntry<float> ConfigTransformInterval { get; set; }
@@ -43,6 +45,9 @@ namespace ConfigEgocentrism
 			ConfigProjectilesDamage = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesDamage", 3.6f, "Sets the damage multiplier of projectiles.");
 			ConfigProjectilesMaxAmountBase = Config.Bind<int>("ConfigEgocentrismProjectiles", "ProjectilesMaxAmountBase", 2, "Sets the base max amount of projectiles.");
 			ConfigProjectilesMaxAmountStack = Config.Bind<int>("ConfigEgocentrismProjectiles", "ProjectilesMaxAmountStack", 1, "Sets the max amount of projectiles per item in the stack.");
+			ConfigProjectilesRangeBase = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesRangeBase", 15.0f, "Sets the base targeting range of projectiles.");
+			ConfigProjectilesRangeStack = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesRangeStack", 0.0f, "Sets the additional targetting range per item in the stack.");
+
 
 			ConfigTransformEnabled = Config.Bind<bool>("ConfigEgocentrismItemTransform", "TransformEnabled", true, "Enables the transformation of other items.");
 			ConfigTransformInterval = Config.Bind<float>("ConfigEgocentrismItemTransform", "TransformInterval", 60.0f, "Sets the interval between each item transform (in seconds).");
@@ -113,6 +118,14 @@ namespace ConfigEgocentrism
 				float projectileTimer = self.GetFieldValue<float>("projectileTimer");
 				float transformTimer = self.GetFieldValue<float>("transformTimer");
 				Xoroshiro128Plus transformRng = self.GetFieldValue<Xoroshiro128Plus>("transformRng");
+
+				//Modify Projectile Range
+				ProjectileSphereTargetFinder targetFinder = projectilePrefab.GetComponent<ProjectileSphereTargetFinder>();
+				if (targetFinder)
+					targetFinder.lookRange = ConfigProjectilesRangeBase.Value + (ConfigProjectilesRangeStack.Value * stack);
+				else
+					Log.LogError("LunarSunBehavior: Unable to modify projectile Range (ProjectileSphereTargetFinder component not found)");
+
 
 				//Configurable Projectile Fire
 				if(ConfigProjectilesEnabled.Value)
