@@ -4,6 +4,7 @@ using R2API;
 using R2API.Utils;
 using RoR2;
 using RoR2.Projectile;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,6 +30,9 @@ namespace ConfigEgocentrism
         private static ConfigEntry<bool> ConfigTransformEnabled { get; set; }
         private static ConfigEntry<float> ConfigTransformInterval { get; set; }
         private static ConfigEntry<int> ConfigTransformCount { get; set; }
+        private static ConfigEntry<string> ConfigTransformItemFilter { get; set; }
+
+		private List<ItemTier> TransformInvalidItemTiers;
 
         public void Awake()
         {
@@ -43,24 +47,59 @@ namespace ConfigEgocentrism
 			ConfigTransformEnabled = Config.Bind<bool>("ConfigEgocentrismItemTransform", "TransformEnabled", true, "Enables the transformation of other items.");
 			ConfigTransformInterval = Config.Bind<float>("ConfigEgocentrismItemTransform", "TransformInterval", 60.0f, "Sets the interval between each item transform (in seconds).");
 			ConfigTransformCount = Config.Bind<int>("ConfigEgocentrismItemTransform", "TransformCount", 1, "Sets the max number of items transformed at each iteration.");
+			ConfigTransformItemFilter = Config.Bind<string>("ConfigEgocentrismItemTransform", "TransformFilter", "Untiered", "??? ItemFilterDescription ???");
+			ConfigTransformItemFilter.SettingChanged += (s,e) => { BuildItemFilters(); };
+
+			BuildItemFilters();
 
 			SetupHooks();
 
 			Log.LogInfo(nameof(Awake) + " done.");
         }
 
+		private void BuildItemFilters()
+		{
+			TransformInvalidItemTiers = new List<ItemTier>();
+
+			string[] inputTiers = ConfigTransformItemFilter.Value.Split(',');
+
+			foreach(string tierStr in inputTiers)
+			{
+				if (string.IsNullOrWhiteSpace(tierStr))
+					continue;
+				if (Enum.TryParse<ItemTierLookup>(tierStr, out ItemTierLookup tier))
+					TransformInvalidItemTiers.Add((ItemTier)tier);
+				else
+					Log.LogError($"TransformItemFilter: Invalid tier input `{tierStr}`");
+			}
+
+			Log.LogInfo($"TransformItemFilter: Filter List built ({TransformInvalidItemTiers.Count} filters)");
+		}
+
+		/*
 		private void Update()
         {
-			/*
 			if (Input.GetKeyDown(KeyCode.F2))
 			{
 				var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
 				Log.LogInfo($"Player pressed F2. Spawning EgoCentrism at coordinates {transform.position}");
-				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("LunarSun")), transform.position, transform.forward * 20f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("LunarSun")), transform.position, transform.forward * 5f);
+
+				//Spawn some items to test out filters
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ArmorPlate")), transform.position, transform.forward * 10f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AttackSpeedOnCrit")), transform.position, transform.forward * 15f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BarrierOnOverHeal")), transform.position, transform.forward * 20f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("FocusConvergence")), transform.position, transform.forward * 25f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BeetleGland")), transform.position, transform.forward * 30f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BleedOnHitVoid")), transform.position, transform.right * 5f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ChainLightningVoid")), transform.position, transform.right * 10f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")), transform.position, transform.right * 15f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem")), transform.position, transform.right * 20f);
+				PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidmanPassiveItem")), transform.position, transform.right * 25f);
 			}
-			*/
 		}
+		//*/
 
 		private void SetupHooks()
 		{
@@ -116,7 +155,7 @@ namespace ConfigEgocentrism
 									if (itemIndex2 != DLC1Content.Items.LunarSun.itemIndex)
 									{
 										ItemDef itemDef = ItemCatalog.GetItemDef(itemIndex2);
-										if (itemDef && itemDef.tier != ItemTier.NoTier)
+										if (itemDef && !TransformInvalidItemTiers.Contains(itemDef.tier))
 										{
 											itemIndex = itemIndex2;
 											break;
