@@ -35,14 +35,14 @@ namespace ConfigEgocentrism
             Log.Init(Logger);
 
 			ConfigProjectilesEnabled = Config.Bind<bool>("ConfigEgocentrismProjectiles", "ProjectilesEnabled", true, "Enables the generation of projectiles.");
-			ConfigProjectilesInterval = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesInterval", 3.0f, "Sets the interval between each generation of projectiles.");
+			ConfigProjectilesInterval = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesInterval", 3.0f, "Sets the interval between each generation of projectiles (in seconds).");
 			ConfigProjectilesDamage = Config.Bind<float>("ConfigEgocentrismProjectiles", "ProjectilesDamage", 3.6f, "Sets the damage multiplier of projectiles.");
 			ConfigProjectilesMaxAmountBase = Config.Bind<int>("ConfigEgocentrismProjectiles", "ProjectilesMaxAmountBase", 2, "Sets the base max amount of projectiles.");
-			ConfigProjectilesMaxAmountStack = Config.Bind<int>("ConfigEgocentrismProjectiles", "ProjectilesMaxAmountStack", 1, "Sets the max amount of projectiles per item stack.");
+			ConfigProjectilesMaxAmountStack = Config.Bind<int>("ConfigEgocentrismProjectiles", "ProjectilesMaxAmountStack", 1, "Sets the max amount of projectiles per item in the stack.");
 
 			ConfigTransformEnabled = Config.Bind<bool>("ConfigEgocentrismItemTransform", "TransformEnabled", true, "Enables the transformation of other items.");
-			ConfigTransformInterval = Config.Bind<float>("ConfigEgocentrismItemTransform", "TransformInterval", 60.0f, "Sets the interval between each item transform.");
-			ConfigTransformCount = Config.Bind<int>("ConfigEgocentrismItemTransform", "TransformCount", 1, "Sets the number of items to transform at each iteration.");
+			ConfigTransformInterval = Config.Bind<float>("ConfigEgocentrismItemTransform", "TransformInterval", 60.0f, "Sets the interval between each item transform (in seconds).");
+			ConfigTransformCount = Config.Bind<int>("ConfigEgocentrismItemTransform", "TransformCount", 1, "Sets the max number of items transformed at each iteration.");
 
 			SetupHooks();
 
