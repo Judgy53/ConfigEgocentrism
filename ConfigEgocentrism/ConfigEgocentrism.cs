@@ -52,7 +52,7 @@ namespace ConfigEgocentrism
 			ConfigTransformEnabled = Config.Bind<bool>("ConfigEgocentrismItemTransform", "TransformEnabled", true, "Enables the transformation of other items.");
 			ConfigTransformInterval = Config.Bind<float>("ConfigEgocentrismItemTransform", "TransformInterval", 60.0f, "Sets the interval between each item transform (in seconds).");
 			ConfigTransformCount = Config.Bind<int>("ConfigEgocentrismItemTransform", "TransformCount", 1, "Sets the max number of items transformed at each iteration.");
-			ConfigTransformItemFilter = Config.Bind<string>("ConfigEgocentrismItemTransform", "TransformFilter", "Untiered", "??? ItemFilterDescription ???");
+			ConfigTransformItemFilter = Config.Bind<string>("ConfigEgocentrismItemTransform", "TransformFilter", "untiered", "Filters Item Tiers to NOT transform. Avoid removing `untiered` from that list to not lose character passives, artifacts and other hidden stuff.\r\nFormat : tier1,tier2,tier3\r\nValid Tiers: untiered,white,green,red,blue,yellow,voidwhite,voidgreen,voidred,voidyellow");
 			ConfigTransformItemFilter.SettingChanged += (s,e) => { BuildItemFilters(); };
 
 			BuildItemFilters();
