@@ -48,9 +48,9 @@ namespace ConfigEgocentrism
             return defaultVal;
         }
 
-        public static float GetStrictlyPositiveConfigFloat(ConfigEntry<float> config)
+        public static float GetPositiveConfigFloat(ConfigEntry<float> config)
         {
-            if (config.Value > 0.0f)
+            if (config.Value >= 0.0f)
                 return config.Value;
 
             return (float)config.DefaultValue;
@@ -65,7 +65,10 @@ namespace ConfigEgocentrism
         //Formula: baseVal / (stack * stackMult)^stackExponent
         public static float GetDividingFormulaValue(float baseVal, int stack, float stackMult, float stackExponent)
         {
-            return baseVal / Mathf.Pow(stack * stackMult, stackExponent);
+            float divisor = Mathf.Pow(stack * stackMult, stackExponent);
+            if (divisor <= 0.0f)
+                divisor = 1.0f;
+            return baseVal / divisor;
         }
     }
 }

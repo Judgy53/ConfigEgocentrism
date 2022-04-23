@@ -106,8 +106,8 @@ namespace ConfigEgocentrism
 
 			//Projectiles Interval
 			ConfigProjectilesIntervalBase = Config.Bind("Projectiles Interval", "Interval Base", 3.0f, "Sets the base interval between each generation of projectiles (in seconds).\nFormula: _Base_ / (Stack * StackMult)^StackExponent");
-			ConfigProjectilesIntervalStackMult = Config.Bind("Projectiles Interval", "Interval Stack Multiplier", 1.0f, "Sets the stack multiplier in projectiles interval formula.\nOnly accepts values above 0.0. Default value used if input is negative or 0.\nFormula: Base / (Stack * _StackMult_)^StackExponent");
-			ConfigProjectilesIntervalStackExponent = Config.Bind("Projectiles Interval", "Interval Stack Exponent", 1.0f, "Sets the stack exponent in projectiles interval formula.\nOnly accepts values above 0.0. Default value used if input is negative or 0.\nFormula: Base / (Stack * StackMult)^_StackExponent_");
+			ConfigProjectilesIntervalStackMult = Config.Bind("Projectiles Interval", "Interval Stack Multiplier", 1.0f, "Sets the stack multiplier in projectiles interval formula.\nOnly accepts positive values or 0.0. Default value used if input is negative.\nFormula: Base / (Stack * _StackMult_)^StackExponent");
+			ConfigProjectilesIntervalStackExponent = Config.Bind("Projectiles Interval", "Interval Stack Exponent", 1.0f, "Sets the stack exponent in projectiles interval formula.\nOnly accepts positive values or 0.0. Default value used if input is negative.\nFormula: Base / (Stack * StackMult)^_StackExponent_");
 
 			//Projectiles Damage
 			ConfigProjectilesDamageBase = Config.Bind("Projectiles Damage", "Damage Base", 3.6f, "Sets the base damage multiplier of projectiles.\nFormula: _Base_ + (Stack * StackMult)^StackExponent");
@@ -127,8 +127,8 @@ namespace ConfigEgocentrism
 
 			//Transform Interval
 			ConfigTransformIntervalBase = Config.Bind("Transform Interval", "Interval Base", 60.0f, "Sets the base interval between each item transform (in seconds).\nFormula: _Base_ / (Stack * StackMult)^StackExponent");
-			ConfigTransformIntervalStackMult = Config.Bind("Transform Interval", "Interval Stack Multiplier", 0.0f, "Sets the stack multiplier in item transform interval formula.\nOnly accepts values above 0.0. Default value used if input is negative or 0.\nFormula: Base / (Stack * _StackMult_)^StackExponent");
-			ConfigTransformIntervalStackExponent = Config.Bind("Transform Interval", "Interval Stack Exponent", 0.0f, "Sets the stack exponent in item transform interval formula.\nOnly accepts values above 0.0. Default value used if input is negative or 0.\nFormula: Base / (Stack * StackMult)^_StackExponent_");
+			ConfigTransformIntervalStackMult = Config.Bind("Transform Interval", "Interval Stack Multiplier", 0.0f, "Sets the stack multiplier in item transform interval formula.\nOnly accepts positive values or 0.0. Default value used if input is negative.\nFormula: Base / (Stack * _StackMult_)^StackExponent");
+			ConfigTransformIntervalStackExponent = Config.Bind("Transform Interval", "Interval Stack Exponent", 0.0f, "Sets the stack exponent in item transform interval formula.\nOnly accepts positive values or 0.0. Default value used if input is negative.\nFormula: Base / (Stack * StackMult)^_StackExponent_");
 			
 			//Transform Item Amount
 			ConfigTransformAmountBase = Config.Bind("Transform Item Amount", "Transform Amount Base", 1.0f, "Sets the base number of items transformed at each iteration.\nFormula: _Base_ + (Stack * StackMult)^StackExponent");
@@ -269,8 +269,8 @@ namespace ConfigEgocentrism
 		private float GetProjectilesInterval(int stack)
 		{
 			float baseInterval = ConfigProjectilesIntervalBase.Value;
-			float stackMult = Utils.GetStrictlyPositiveConfigFloat(ConfigProjectilesIntervalStackMult);
-			float stackExponent = Utils.GetStrictlyPositiveConfigFloat(ConfigProjectilesIntervalStackExponent);
+			float stackMult = Utils.GetPositiveConfigFloat(ConfigProjectilesIntervalStackMult);
+			float stackExponent = Utils.GetPositiveConfigFloat(ConfigProjectilesIntervalStackExponent);
 
 			return Utils.GetDividingFormulaValue(baseInterval, stack, stackMult, stackExponent);
 		}
@@ -306,8 +306,8 @@ namespace ConfigEgocentrism
 		private float GetTransformInterval(int stack)
 		{
 			float baseInterval = ConfigTransformIntervalBase.Value;
-			float stackMult = Utils.GetStrictlyPositiveConfigFloat(ConfigTransformIntervalStackMult);
-			float stackExponent = Utils.GetStrictlyPositiveConfigFloat(ConfigTransformIntervalStackExponent);
+			float stackMult = Utils.GetPositiveConfigFloat(ConfigTransformIntervalStackMult);
+			float stackExponent = Utils.GetPositiveConfigFloat(ConfigTransformIntervalStackExponent);
 
 			return Utils.GetDividingFormulaValue(baseInterval, stack, stackMult, stackExponent);
 		}
