@@ -17,7 +17,7 @@ namespace ConfigEgocentrism
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "Judgy";
         public const string PluginName = "ConfigEgocentrism";
-        public const string PluginVersion = "1.1.0";
+        public const string PluginVersion = "1.2.0";
 
         #region Config Definitions
         #region Config Projectiles
