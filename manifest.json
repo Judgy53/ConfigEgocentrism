@@ -1,6 +1,6 @@
 ﻿{
 	"name": "ConfigEgocentrism",
-	"version_number": "1.2.0",
+	"version_number": "1.2.1",
 	"website_url": "https://github.com/Judgy53/ConfigEgocentrism",
 	"description": "Change how Egocentrism works through a config file.",
 	"dependencies": [
