@@ -74,30 +74,6 @@ namespace ConfigEgocentrism
             Log.LogInfo(nameof(Awake) + " done.");
         }
 
-        /* Debug Item Spawns
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
-
-                Log.LogInfo($"Player pressed F2. Spawning EgoCentrism at coordinates {transform.position}");
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("LunarSun")), transform.position, transform.forward * 5f);
-
-                //Spawn some items to test out filters
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ArmorPlate")), transform.position, transform.forward * 10f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("AttackSpeedOnCrit")), transform.position, transform.forward * 15f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BarrierOnOverHeal")), transform.position, transform.forward * 20f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("FocusConvergence")), transform.position, transform.forward * 25f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BeetleGland")), transform.position, transform.forward * 30f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("BleedOnHitVoid")), transform.position, transform.right * 5f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ChainLightningVoid")), transform.position, transform.right * 10f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("ExtraLifeVoid")), transform.position, transform.right * 15f);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(ItemCatalog.FindItemIndex("VoidMegaCrabItem")), transform.position, transform.right * 20f);
-            }
-        }
-        //*/
-
         private void CreateConfig()
         {
             //Features Toggle
@@ -149,6 +125,7 @@ namespace ConfigEgocentrism
 
         private void ConfigCleanup()
         {
+            Log.LogWarning("Old Config data cleaned up. This should only get triggered once ever.");
             Dictionary<ConfigDefinition, string> orphanedEntries = Config.GetPropertyValue<Dictionary<ConfigDefinition, string>>("OrphanedEntries");
             orphanedEntries.Clear();
 
@@ -211,7 +188,9 @@ namespace ConfigEgocentrism
                             damageColorIndex = DamageColorIndex.Item,
                             force = 0f,
                             owner = self.gameObject,
+#pragma warning disable Publicizer001 // Accessing a member that was not originally public
                             position = body.transform.position,
+#pragma warning restore Publicizer001 // Accessing a member that was not originally public
                             rotation = Quaternion.identity
                         };
 
