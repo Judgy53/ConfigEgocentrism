@@ -19,8 +19,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
-    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.3.1-r.0" />
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="R2API.Core" Version="5.0.6" />
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.4-r.0" />
     <PackageReference Include="UnityEngine.Modules" Version="2019.4.26" />
   </ItemGroup>
 
@@ -57,10 +58,6 @@
     </Reference>
     <Reference Include="ProBuilderMeshOps">
       <HintPath>libs\ProBuilderMeshOps.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="R2API">
-      <HintPath>libs\R2API.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Rewired_Windows_Lib">

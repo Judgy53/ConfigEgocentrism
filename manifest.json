@@ -4,8 +4,7 @@
 	"website_url": "https://github.com/Judgy53/ConfigEgocentrism",
 	"description": "Change how Egocentrism works through a config file.",
 	"dependencies": [
-		"bbepis-BepInExPack-5.4.9",
-		"RiskofThunder-HookGenPatcher-1.2.1",
-		"tristanmcpherson-R2API-4.0.11"
+		"bbepis-BepInExPack-5.4.21",
+		"RiskofThunder-R2API_Core-5.0.6"
 	]
 }
