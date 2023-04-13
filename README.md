@@ -82,6 +82,10 @@ Internal settings to ensure updating version works properly. Do not edit manuall
 
 # Changelog 
 
+- 1.2.1
+    - Update Dependencies.
+    - Switch R2API to module system. Now only requires `R2API_Core` instead of the whole package.
+
 - 1.2.0
     - Complete rework to allow very fine tuning of Egocentrism.
     - Wipe of previous versions config. Was necessary to make the config file actually usable.
